@@ -8,9 +8,9 @@ class TimelapseCreator:
         self.camera_handler = CameraDirectoryHandler(camera_dirs)
         self.photo_mover = PhotoMover(destination_dirs)
     
-    def process_day(self, date):
+    def process_day(self, date, target_times):
         """Обрабатывает фотографии за конкретный день."""
-        photos_by_camera = self.camera_handler.get_photos_for_day(date)
+        photos_by_camera = self.camera_handler.get_photos_for_day(date, target_times)
         
         for camera, photos in photos_by_camera.items():
             if photos:
@@ -18,3 +18,4 @@ class TimelapseCreator:
                 self.photo_mover.move_photos(photos)
             else:
                 logging.info(f"Фото не найдено для камеры {camera} за {date}.")
+
