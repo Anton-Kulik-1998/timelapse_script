@@ -13,9 +13,9 @@ def run_timelapse_daily(timelapse_creator, run_time, target_times):
         now = datetime.now()
         target_run_time = now.replace(hour=run_time.hour, minute=run_time.minute, second=0, microsecond=0)
         
-        # if now > target_run_time:
-        #     # Если текущее время уже прошло целевое время, то запустим копирование на следующий день
-        #     target_run_time += timedelta(days=1)
+        if now >= target_run_time:
+            # Если текущее время уже прошло целевое время, то запустим копирование на следующий день
+            target_run_time += timedelta(days=1)
 
         time_to_sleep = (target_run_time - now).total_seconds()
         logging.info(f"Ждем до {target_run_time.strftime('%Y-%m-%d %H:%M:%S')} ({time_to_sleep / 3600:.2f} часов).")
