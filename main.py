@@ -29,10 +29,10 @@ def run_timelapse_daily(timelapse_creator, run_time, target_times):
         except Exception as e:
             logging.error(f"Ошибка в процессе обработки: {e}")
 
-        # Ждем следующего дня для запуска
-        next_run_time = target_run_time + timedelta(days=1)
-        time_to_sleep = (next_run_time - datetime.now()).total_seconds()
-        logging.info(f"Следующий запуск через {time_to_sleep / 3600:.2f} часов.")
+        # Устанавливаем точное время следующего запуска на следующий день в то же время
+        target_run_time = target_run_time.replace(day=(target_run_time + timedelta(days=1)).day)
+        time_to_sleep = (target_run_time - datetime.now()).total_seconds()
+        logging.info(f"Следующий запуск запланирован на {target_run_time.strftime('%Y-%m-%d %H:%M:%S')}")
         time.sleep(time_to_sleep)
 
 def main():
